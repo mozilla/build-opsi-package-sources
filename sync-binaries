@@ -1,4 +1,43 @@
 #!/bin/bash
+#
+# Author: Ben Hearsum <bhearsum@mozilla.com>
+# 
+# This is designed to sync package binaries with package sources. Binaries are
+# kept in a private repository for technical and legal reasons. This script
+# lives alongside the rest of the package sources in a public repository.
+# Both repositories should have a similar layout, detailed below.
+#
+# When a binary package is updated in the private repository you should do
+# the following to make sure the local clone of the public repository is
+# up-to-date:
+#  cd opsi-binaries
+#  cvs up
+#  cd ../opsi-package-sources
+#  hg pull && hg up
+#  sync-binaries
+#
+# Your opsi-package-sources directory should now be up to date with the latest
+# installation scripts and binaries. From here, you can proceed with package
+# generation as normal.
+# 
+# Package sources (public):
+#  /.hgignore - should contain at least \.exe$ and \.msi.
+#  /README - Brief description of package source layout.
+#  /sync-binaries - Script used to sync binaries into their proper place
+#                   alongside the sources.
+#  /newproduct-template - Package source directory containing a template
+#                         on which new packages should be based on.
+#  /product1
+#  /product2
+#  et. al    - Real package source directories, each at least the following
+#              subdirectories: CLIENT_DATA/, OPSI/
+#
+# Package binaries (private):
+#  /product1
+#  /product2
+#  et. al    - Directory names which correspond to those in the public
+#              repository.
+#
 
 RSYNC_COMMAND="rsync --exclude=CVS -av"
 
