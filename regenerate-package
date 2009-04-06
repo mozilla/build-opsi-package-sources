@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Author: Ben Hearsum <bhearsum@mozilla.com>
+#
+# This script is used to generate a .opsi package from a package source
+# directory. Before running this script you should update the public
+# and private checkouts, and run sync-binaries.
+
+name=$1
+dir=~/opsi-package-sources/$name
+packagedir=~/opsi-packages
+
+if [ ! -d $dir ]; then
+	echo "$dir doesn't exist, exiting...";
+	exit 1;
+fi
+
+opsi-package-manager -r $name
+filename=$(opsi-makeproductfile $dir | egrep '^Package file' | \
+           awk '{print $4}' | sed -e s/\'//g)
+filename=${filename##*/}
+mv $filename $packagedir/
+echo "Package file is $packagedir/$filename"
+opsi-package-manager -i $packagedir/$filename
