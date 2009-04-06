@@ -1,0 +1,26 @@
+#!/bin/bash
+
+RSYNC_COMMAND="rsync --exclude=CVS -av"
+
+binarydir="../opsi-binaries"
+
+if [ ! -d $binarydir ]; then
+    echo "ERROR: $binarydir does not exist, bailing..."
+    exit 1
+fi
+
+for packagedir in `find . -type d -not -name .hg -not -name . -maxdepth 1`; do
+    echo
+    echo "****************************************"
+    echo "Processing $packagedir/"
+    echo "****************************************"
+    if [ ! -d $binarydir/$packagedir/ ]; then
+        echo "WARNING: No matching dir in $binarydir/, skipping..."
+        continue
+    fi
+    echo "Running $RSYNC_COMMAND $binarydir/$packagedir/ $packagedir/CLIENT_DATA/"
+    $RSYNC_COMMAND $binarydir/$packagedir/ $packagedir/CLIENT_DATA/
+    if [[ $? != 0 ]]; then
+        echo "ERROR: rsync failed for $packagedir/"
+    fi
+done
