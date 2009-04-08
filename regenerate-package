@@ -18,7 +18,8 @@ fi
 opsi-package-manager -r $name
 filename=$(opsi-makeproductfile $dir | egrep '^Package file' | \
            awk '{print $4}' | sed -e s/\'//g)
-filename=${filename##*/}
+filename=$(basename $filename)
 mv $filename $packagedir/
+mv $filename.md5 $packagedir/
 echo "Package file is $packagedir/$filename"
 opsi-package-manager -i $packagedir/$filename
