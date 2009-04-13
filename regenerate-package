@@ -7,8 +7,8 @@
 # and private checkouts, and run sync-binaries.
 
 name=$1
-dir=~/opsi-package-sources/$name
-packagedir=~/opsi-packages
+dir=~cltbld/opsi-package-sources/$name
+packagedir=~cltbld/opsi-packages
 
 if [ ! -d $dir ]; then
 	echo "$dir doesn't exist, exiting...";
