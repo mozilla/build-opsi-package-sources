@@ -1,0 +1,1 @@
+passwordupdate.ins lives in the mofo opsi-binaries repository because it contains plaintext versions of our passwords. Do NOT move it to this repository.
