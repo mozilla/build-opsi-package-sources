@@ -15,7 +15,6 @@ if [ ! -d $dir ]; then
 	exit 1;
 fi
 
-opsi-package-manager -r $name
 filename=$(opsi-makeproductfile $dir | egrep '^Package file' | \
            awk '{print $4}' | sed -e s/\'//g)
 filename=$(basename $filename)
