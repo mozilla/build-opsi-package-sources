@@ -1,0 +1,27 @@
+[Initial]
+Message=Buildbot Installation
+StayOnTop=false
+
+[Aktionen]
+DefVar $BuildbotRepo$
+DefVar $InstallPrefix$
+DefVar $InstallDir$
+Set $BuildbotRepo$ = "http://hg.mozilla.org/build/buildbot"
+Set $InstallPrefix$ = "d:\\mozilla-build\\python25"
+Set $InstallDir$ = $InstallPrefix$+"\\lib\\site-packages\\buildbot"
+
+DosInAnIcon_delete_buildbot
+DosInAnIcon_install_buildbot
+
+if not(FileExists($InstallDir$))
+    logError "Fatal: After Installation "+$InstallDir$+" not found"
+    isFatalError
+endif
+
+[DosInAnIcon_delete_buildbot]
+rmdir /s /q $InstallDir$
+
+[DosInAnIcon_install_buildbot]
+hg clone $BuildbotRepo$ buildbot
+cd buildbot
+python setup.py install --prefix=$InstallPrefix$
