@@ -1,0 +1,26 @@
+[Initial]
+Message=Java 6 Update 14 Installation
+StayOnTop=false
+
+[Aktionen]
+DefVar $JreDir$
+DefVar $JdkDir$
+Set $JreDir$ = "d:\jre1.6.0_14"
+Set $JdkDir$ = "d:\jdk1.6.0_14"
+
+Winbatch_install_java
+if not(FileExists($JreDir$))
+    logError "Fatal: After Installation "+$JreDir$+" not found"
+    isFatalError
+endif
+if not(FileExists($JdkDir$))
+    logError "Fatal: After Installation "+$JdkDir$+" not found"
+    isFatalError
+endif
+
+[Winbatch_install_java]
+; /passive is an unattended install with a UI. /quiet is without one.
+; Unfortunately, the JDK doesn't install properly with /passive, so we
+; use /quiet with it.
+%SCRIPTPATH%\jre-6u14-windows-i586.exe /passive INSTALLDIR=$JreDir$
+%SCRIPTPATH%\jdk-6u14-windows-i586.exe /quiet INSTALLDIR=$JdkDir$
