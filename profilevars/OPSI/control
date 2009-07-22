@@ -1,6 +1,6 @@
 [Package]
 version: 1
-depends:
+depends: 
 incremental: False
 
 [Product]
@@ -24,3 +24,9 @@ uninstallScript:
 updateScript: 
 alwaysScript: 
 onceScript: 
+
+[ProductDependency]
+action: setup
+requiredProduct: mozillabuild
+requiredStatus: installed
+requirementType: before
