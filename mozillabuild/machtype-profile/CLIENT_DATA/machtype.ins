@@ -1,0 +1,13 @@
+[Initial]
+Message=Deploying MACHTYPE in /etc/profile
+StayOnTop=false
+
+[Aktionen]
+DefVar $MachType$
+DefVar $ProfileFile$
+Set $MachType$ = "export MACHTYPE=$MACHTYPE"
+Set $ProfileFile$ = "d:\\mozilla-build\\msys\\etc\\profile"
+DosInAnIcon_add_machtype
+
+[DosInAnIcon_add_machtype]
+echo $MachType$ >> $ProfileFile$
