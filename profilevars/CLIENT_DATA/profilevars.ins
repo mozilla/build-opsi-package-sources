@@ -10,5 +10,5 @@ Set $ProfileFile$ = "d:\\mozilla-build\\msys\\etc\\profile"
 DosInAnIcon_add_vars
 
 [DosInAnIcon_add_vars]
-echo "# Added for bug 505552, to work around MB 1.4 issues" >> $ProfileFile$
+echo # Added for bug 505552, to work around MB 1.4 issues >> $ProfileFile$
 echo $Exports$ >> $ProfileFile$
