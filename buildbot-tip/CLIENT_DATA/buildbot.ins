@@ -6,9 +6,11 @@ StayOnTop=false
 DefVar $BuildbotRepo$
 DefVar $InstallPrefix$
 DefVar $InstallDir$
+DefVar $ScriptDir$
 Set $BuildbotRepo$ = "http://hg.mozilla.org/build/buildbot"
 Set $InstallPrefix$ = "d:\\mozilla-build\\python25"
 Set $InstallDir$ = $InstallPrefix$+"\\lib\\site-packages\\buildbot"
+Set $ScriptDir$ = $InstallPrefix$+"\\scripts"
 
 DosInAnIcon_delete_buildbot
 DosInAnIcon_install_buildbot
@@ -24,4 +26,8 @@ rmdir /s /q $InstallDir$
 [DosInAnIcon_install_buildbot]
 hg clone $BuildbotRepo$ buildbot
 cd buildbot
-python setup.py install --prefix=$InstallPrefix$
+; We use --old-and-unmanageable because it gives us a non-changing
+; directory name
+python setup.py install --old-and-unmanageable --prefix=$InstallPrefix$
+; Need to make sure we get the non-easy_install script
+copy /Y bin/buildbot $ScriptDir$
