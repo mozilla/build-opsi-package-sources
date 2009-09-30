@@ -1,0 +1,258 @@
+; Copyright (c) uib gmbh (www.uib.de)
+; This sourcecode is owned by uib
+; and published under the Terms of the General Public License.
+
+; TEMPLATE for
+; Skript fuer Installationen im Kontext eines temporaeren lokalen Administrators
+; installations as temporary local admin
+; see winst_manual.pdf / winst_handbuch.pdf
+
+; !!! requires winst32.exe version 4.2.x !!!
+
+;
+; !!! Das lokale Installations-Skript, das durch den temporaeren lokalen Admin ausgefuehrt wird
+; !!! (sein Name steht in $LocalSetupScript$), muss mit dem Befehl  
+; !!! exitWindows /Reboot
+; !!! enden
+; 
+
+; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+; Vorarbeiten/Voraussetzungen/Doku pruefen wie in Winsthandbuch
+; 8.3 Skript fuer Installationen im Kontext eines lokalen Administrators
+; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+[Initial]
+LogLevel=2
+ExitOnError=false
+ScriptErrorMessages=on
+TraceMode=off
+
+
+[Aktionen]
+DefVar $ProductName$
+Set $ProductName$ = "win7-sdk"
+DefVar $ProductSizeMB$
+Set $ProductSizeMB$ = "800"
+DefVar $LocalSetupScript$
+Set $LocalSetupScript$ = "local_"+$ProductName$+".ins"
+; Set PasswdLogLevel to -2 to prevent passwords to logged  included in opsi 2.5 / winst32.exe version 4.2.x !!!
+;
+DefVar $PasswdLogLevel$
+Set $PasswdLogLevel$="-2"
+DefVar $OpsiAdminPass$
+DefStringlist $outlist$
+
+; some variables for the sub sections
+DefVar $SYSTEMROOT$
+DefVar $SYSTEMDRIVE$
+DefVar $ScriptPath$
+DefVar $ProgramFilesDir$
+DefVar $HOST$
+DefVar $AppDataDir$
+Set $SYSTEMDRIVE$ = "%SYSTEMDRIVE%"
+Set $SYSTEMROOT$ = "%SYSTEMROOT%"
+set $ScriptPath$="%ScriptPath%"
+set $ProgramFilesDir$="%ProgramFilesDir%"
+set $Host$="%Host%"
+set $AppDataDir$="%AppDataDir%"
+; temp is always useful
+DefVar $TEMP$
+Set $TEMP$= EnvVar("TEMP")
+DefVar $Tmp$
+set $Tmp$ = EnvVar("TMP")
+;Variables for version of the operating system (OS)-Test
+DefVar $OS$
+DefVar $MinorOS$
+set $OS$ = GetOS
+set $MinorOS$ = GetNTVersion
+
+DefVar $RebootFlag$
+DefVar $WinstRegKey$
+DefVar $RebootRegVar$
+DefVar $AutoName$
+DefVar $AutoPass$
+DefVar $AutoDom$
+DefVar $AutoLogon$
+DefVar $AutoBackupKey$
+DefVar $LocalFilesPath$
+DefVar $LocalWinst$
+
+Set $WinstRegKey$ = "HKLM\SOFTWARE\opsi.org\winst"
+Set $RebootFlag$ = GetRegistryStringValue("["+$WinstRegKey$+"] "+"RebootFlag")
+Set $AutoBackupKey$ = $WinstRegKey$+"\AutoLogonBackup"
+Set $LocalFilesPath$ = "d:\tmp"
+Set $LocalWinst$ = "c:\opsi\utils\winst32.exe"
+if not( FileExists($LocalWinst$) )
+	Set $LocalWinst$ = "%ProgramFilesDir%\opsi.org\preloginloader\utils\winst32.exe"
+endif
+; preloginloader >= 3.4
+if not( FileExists($LocalWinst$) )
+	Set $LocalWinst$ = "%ProgramFilesDir%\opsi.org\preloginloader\opsi-winst\winst32.exe"
+endif
+
+
+if ($OS$ = "Windows_NT" AND not ($MinorOS$="NT4"))
+
+	if not (($RebootFlag$ = "1") or ($RebootFlag$ = "2"))
+		;=========================
+		; Anweisungen vor Reboot
+
+
+		if not(HasMinimumSpace ("%SYSTEMDRIVE%", ""+$ProductSizeMB$+" MB"))
+			LogError "Nicht genuegend Platz auf C: . "+$ProductSizeMB$+" MB auf C: fuer "+$ProductName$+" erforderlich."
+		else
+
+			; show product picture
+			ShowBitmap /3 "%scriptpath%\localsetup\"+$ProductName$+".bmp" $ProductName$
+
+			Message "Preparing "+$ProductName$+" install step 1 ..."
+			sub_Prepare_AutoLogon
+
+			; we need to reboot now to be sure that the autologon work
+
+			; Reboot initialisieren ...
+			Set $RebootFlag$ = "1"
+			Registry_SaveRebootFlag
+			ExitWindows /ImmediateReboot
+
+		endif ; genuegend platz
+		
+	else ; Rebootflag "1" oder "2"
+		
+		if ($RebootFlag$ = "1")
+			;=========================
+			; Anweisungen nach Reboot
+			; Rebootflag weitersetzen
+			Set $RebootFlag$ = "2"
+			Registry_SaveRebootFlag
+			
+			; die eigentlichen Anweisungen
+	
+			Message "Preparing "+$ProductName$+" install step 2..."
+			ExitWindows /ImmediateLogout
+			; now let the autologon work
+			; it will stop with a reboot
+			
+		else
+		
+			if ($RebootFlag$ = "2")
+				;=========================
+				; statements after second reboot
+				Set $RebootFlag$ = "0"
+				Registry_SaveRebootFlag
+				
+				; This part must be here even if nothing is done
+				; possibly we do some cleanup
+				Message "Cleanup "+$ProductName$+" install ..."
+				sub_Restore_AutoLogon
+				; This is the clean end of the installation
+				
+			endif ; Rebootflag = 2
+			
+		endif ; "1" oder "2"
+		
+	endif
+	
+endif
+
+[sub_Prepare_AutoLogon]
+Files_copy_Setup_files_local
+; read actual Autologon values for backup
+set $AutoName$ = GetRegistryStringValue ("[HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon] DefaultUserName")
+; if AutoLogonName is our setup admin user, something bad happend
+; then let us cleanup
+if ($AutoName$="opsiSetupAdmin")
+	set $AutoName$=""
+	set $AutoPass$=""
+	set $AutoDom$=""
+	set $AutoLogon$="0"
+else
+	set $AutoPass$ = GetRegistryStringValue ("[HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon] DefaultPassword")
+	set $AutoDom$ = GetRegistryStringValue ("[HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon] DefaultDomainName")
+	set $AutoLogon$ = GetRegistryStringValue ("[HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon] AutoAdminLogon")
+endif
+; backup AutoLogon values
+Registry_save_autologon
+; prepare the admin AutoLogon
+;LogLevel="$PasswdLogLevel$"
+LogLevel=-2
+;
+; !!! randomstr included in opsi 2.5 winst32.exe 4.2.x !!!
+;
+
+set $OpsiAdminPass$= randomstr
+Registry_autologon
+; create our setup admin user
+DosInAnIcon_makeadmin
+LogLevel=2
+
+; store our setup script as run once
+comment "set entry in runonce"
+Registry_runOnce
+
+[sub_Restore_AutoLogon]
+; read AutoLogon values from backup
+set $AutoName$ = GetRegistryStringValue("["+$AutoBackupKey$+"] DefaultUserName")
+set $AutoPass$ = GetRegistryStringValue("["+$AutoBackupKey$+"] DefaultPassword")
+set $AutoDom$= GetRegistryStringValue("["+$AutoBackupKey$+"] DefaultDomainName")
+set $AutoLogon$= GetRegistryStringValue("["+$AutoBackupKey$+"] AutoAdminLogon")
+; restore the values
+;LogLevel="$PasswdLogLevel$"
+LogLevel=-2
+Registry_restore_autologon
+LogLevel=2
+; delete our setup admin user
+DosInAnIcon_deleteadmin
+; cleanup setup script, files and profiledir
+Files_delete_Setup_files_local
+; delete profiledir
+DosInAnIcon_deleteprofile
+
+[Registry_save_autologon]
+openkey [$AutoBackupKey$]
+set "DefaultUserName"="$AutoName$"
+set "DefaultPassword"="$AutoPass$"
+set "DefaultDomainName"="$AutoDom$"
+set "AutoAdminLogon"="$AutoLogon$"
+
+[Registry_restore_autologon]
+openkey [HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon]
+set "DefaultUserName"="$AutoName$"
+set "DefaultPassword"="$AutoPass$"
+set "DefaultDomainName"="$AutoDom$"
+set "AutoAdminLogon"="$AutoLogon$"
+
+[DosInAnIcon_deleteadmin]
+NET USER opsiSetupAdmin  /DELETE
+
+[Registry_SaveRebootFlag]
+openKey [$WinstRegKey$]
+set "RebootFlag" = "$RebootFlag$"
+
+[DosInAnIcon_deleteprofile]
+rmdir /S /Q "%ProfileDir%\opsiSetupAdmin"
+
+[DosInAnIcon_makeadmin]
+NET USER opsiSetupAdmin $OpsiAdminPass$ /ADD
+NET LOCALGROUP Administrators /ADD opsiSetupAdmin
+
+[Registry_autologon]
+openkey [HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon]
+set "DefaultUserName"="opsiSetupAdmin"
+set "DefaultPassword"="$OpsiAdminPass$"
+set "DefaultDomainName"="%PCNAME%"
+set "AutoAdminLogon"="1"
+
+[Registry_runonce]
+openkey [HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce]
+set "opsi_autologon_setup"='"$LocalWinst$" "$LocalFilesPath$\local_win7-sdk.ins" "c:\tmp\localinst.log" /batch'
+
+[Files_copy_Setup_files_local]
+checktargetpath="$LocalFilesPath$"
+copy -s "%ScriptPath%\*.*" 
+
+[Files_delete_Setup_files_local]
+delete -sf $LocalFilesPath$
+; folgender Befehl funktioniert nicht vollstaendig, deshalb ist er zur Zeit auskommentier
+; der Befehl wird durch die Sektion "DosInAnIcon_deleteprofile" ersetzt (P.Ohler)
+;delete -sf "%ProfileDir%\opsiSetupAdmin"
