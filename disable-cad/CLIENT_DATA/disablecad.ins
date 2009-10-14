@@ -1,0 +1,10 @@
+[Initial]
+Message=Disable CAD
+StayOnTop=false
+
+[Aktionen]
+Registry_set_login_settings
+
+[Registry_set_login_settings]
+openkey [HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\policies\system]
+set "disablecad"=REG_DWORD:1

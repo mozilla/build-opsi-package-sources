@@ -1,0 +1,26 @@
+[Package]
+version: 1
+depends:
+incremental: False
+
+[Product]
+type: localboot
+; id is a very short name for the package.
+id: disablecad
+; name is a longer, more descript name.
+name: Disable CAD
+description: Disable Ctrl-alt-delete at the login screen. (bug 522078)
+advice: 
+; You should put the version number of the application here.
+; If this package isn't for installing an application it doesn't really matter.
+version: 1.0
+priority: 0
+licenseRequired: False
+productClasses: 
+; Change this to something more sensible.
+setupScript: disablecad.ins
+; These are rarely used.
+uninstallScript: 
+updateScript: 
+alwaysScript: disablecad.ins
+onceScript: 
