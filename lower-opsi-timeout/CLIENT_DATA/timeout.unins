@@ -1,0 +1,10 @@
+[Initial]
+Message=Lower OPSI Timeout
+StayOnTop=false
+
+[Aktionen]
+Registry_set_timeout
+
+[Registry_set_timeout]
+openkey [HKEY_LOCAL_MACHINE\Software\opsi.org\pcptch]
+set "SecsUntilConnectionTimeout"=REG_DWORD:0xb4
