@@ -1,0 +1,9 @@
+[Initial]
+Message=Re-enable Shutdown Event Tracker
+StayOnTop=false
+
+[Aktionen]
+Registry_enable_shutdown_tracker
+
+[Registry_enable_shutdown_tracker]
+DeleteKey [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Reliability]
