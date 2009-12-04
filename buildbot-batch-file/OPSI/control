@@ -1,0 +1,32 @@
+[Package]
+version: 1
+depends:
+incremental: False
+
+[Product]
+type: localboot
+; id is a very short name for the package.
+id: buildbot-batch-file
+; name is a longer, more descript name.
+name: Buildbot Batch File Deployer
+description: Used for rolling out changes to the Buildbot startup batch file
+advice: 
+; You should put the version number of the application here.
+; If this package isn't for installing an application it doesn't really matter.
+version: 1.0
+priority: 0
+licenseRequired: False
+productClasses: 
+; Change this to something more sensible.
+setupScript: buildbot-batch.ins
+; These are rarely used.
+uninstallScript:
+updateScript: 
+alwaysScript: 
+onceScript: 
+
+[ProductDependency]
+action: setup
+requiredProduct: toolsrepo
+requiredStatus: installed
+requirementType: before
