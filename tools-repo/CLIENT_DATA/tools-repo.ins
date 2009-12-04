@@ -1,0 +1,27 @@
+[Initial]
+Message=Tools Repo Clobber and Clone
+StayOnTop=false
+
+[Aktionen]
+DefVar $ToolsRepo$
+DefVar $InstallPrefix$
+DefVar $InstallDir$
+
+Set $ToolsRepo$ = "http://hg.mozilla.org/build/tools"
+Set $InstallPrefix$ = "d:"
+Set $InstallDir$ = $InstallPrefix$ + "\\tools"
+ 
+DosInAnIcon_delete_tools_repo
+DosInAnIcon_setup_tools_repo
+
+if not(FileExists($InstallDir$))
+    logError $InstallDir$ + " not found"
+endif
+
+[DosInAnIcon_delete_tools_repo]
+rmdir /s /q $InstallDir$
+
+[DosInAnIcon_setup_tools_repo]
+cd /d $InstallPrefix$
+hg clone $ToolsRepo$ tools
+
