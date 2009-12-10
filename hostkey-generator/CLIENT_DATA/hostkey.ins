@@ -1,0 +1,14 @@
+[Initial]
+Message=OPSI Hostkey Generator
+StayOnTop=false
+
+[Aktionen]
+DefVar $Python$
+DefVar $HostkeyScript$
+Set $Python$ = "d:\\mozilla-build\\python25\\python.exe"
+Set $HostkeyScript$ = "d:\\tools\\buildfarm\\opsi\\regenerate-hostkey.py"
+
+DosInAnIcon_add_hostkey_task
+
+[DosInAnIcon_add_hostkey_task]
+schtasks /create /tn opsikey /tr "\"$Python$\" \"$HostkeyScript$\"" /sc ONSTART /ru SYSTEM
