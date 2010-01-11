@@ -19,14 +19,14 @@ CLIENT_CONFIG_DIR="/var/lib/opsi/config/clients"
 BUILD_CONFIG_TEMPLATE=path.join(CLIENT_CONFIG_DIR,
                                 "win2k3-ref-img.uib.local.ini")
 # TODO: create these files
-TALOS_XP_CONFIG_TEMPLATE=path.join(CLIENT_CONFIG_DIR, "qm-ref-xp.uib.local.ini")
-TALOS_VISTA_CONFIG_TEMPLATE=path.join(CLIENT_CONFIG_DIR,
-                                      "qm-ref-vista.uib.local.ini")
+TALOS_XP_CONFIG_TEMPLATE=path.join(CLIENT_CONFIG_DIR, "talos-r3-xp-ref.uib.local.ini")
+TALOS_WIN7_CONFIG_TEMPLATE=path.join(CLIENT_CONFIG_DIR,
+                                     "talos-r3-w7-ref.uib.local.ini")
 OWNER=getpwnam("opsiconfd")[2] # The UID of opsiconfd
 GROUP=getgrnam("pcpatch")[2] # The GID of pcpatch
 MODE=0664
 
-BUILD_HOST, TALOS_XP_HOST, TALOS_VISTA_HOST, UNKNOWN_HOST = range(4)
+BUILD_HOST, TALOS_XP_HOST, TALOS_WIN7_HOST, UNKNOWN_HOST = range(4)
 
 class MissingTemplateError(Exception):
     pass
@@ -37,8 +37,8 @@ def get_host_type(hostname):
     elif 'talos' in hostname or '-try' in hostname:
         if 'xp' in hostname:
             return TALOS_XP_HOST
-        elif 'vista' in hostname:
-            return TALOS_VISTA_HOST
+        elif 'w7' in hostname:
+            return TALOS_WIN7_HOST
     return UNKNOWN_HOST
 
 def get_config_template(hostname):
@@ -47,8 +47,8 @@ def get_config_template(hostname):
         return BUILD_CONFIG_TEMPLATE
     elif type == TALOS_XP_HOST:
         return TALOS_XP_CONFIG_TEMPLATE
-    elif type == TALOS_VISTA_HOST:
-        return TALOS_VISTA_CONFIG_TEMPLATE
+    elif type == TALOS_WIN7_HOST:
+        return TALOS_WIN7_CONFIG_TEMPLATE
     else:
         return None
 
