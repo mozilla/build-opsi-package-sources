@@ -1,0 +1,12 @@
+[Initial]
+Message=Disable Visual Studio JIT Debugger
+StayOnTop=false
+
+[Aktionen]
+Registry_disable_jit
+
+[Registry_disable_jit]
+openkey [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug]
+set "Auto"="1"
+deletevar "Debugger"
+deletevar "VDebugger"

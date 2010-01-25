@@ -1,0 +1,11 @@
+[Initial]
+Message=Re-enable Visual Studio JIT Debugger
+StayOnTop=false
+
+[Aktionen]
+Registry_enable_jit
+
+[Registry_enable_jit]
+openkey [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug]
+set "Auto"="0"
+set "Debugger"='"C:\WINDOWS\system32\vsjitdebugger.exe" -p %ld -e %ld'
