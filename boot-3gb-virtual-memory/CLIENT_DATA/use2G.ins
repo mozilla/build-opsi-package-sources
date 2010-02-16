@@ -1,0 +1,13 @@
+[Initial]
+Message=Switch to 2G default for app. virtual memory
+StayOnTop=false
+
+[Aktionen]
+DosInAnIcon_copy
+ExitWindows /Reboot
+
+[DosInAnIcon_copy]
+attrib -s -h c:\boot.ini
+move /Y c:\boot.ini c:\boot.ini.bak
+copy /Y %SCRIPTPATH%\boot.ini.2G c:\boot.ini
+attrib -r +a +s +h c:\boot.ini
