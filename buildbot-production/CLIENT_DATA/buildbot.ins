@@ -24,6 +24,7 @@ endif
 rmdir /s /q $InstallDir$
 
 [DosInAnIcon_install_buildbot]
+rmdir /s /q buildbot
 hg clone $BuildbotRepo$ buildbot
 cd buildbot
 hg up -r BUILDBOT_PRODUCTION
