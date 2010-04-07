@@ -6,10 +6,10 @@ incremental: False
 [Product]
 type: localboot
 ; id is a very short name for the package.
-id: buildbot-batch-file
+id: buildbot-startup
 ; name is a longer, more descript name.
-name: Buildbot Batch File Deployer
-description: Used for rolling out changes to the Buildbot startup batch file
+name: Buildbot Startup Files
+description: This package deploys the files involved in starting the Buildbot process on boot
 advice: 
 ; You should put the version number of the application here.
 ; If this package isn't for installing an application it doesn't really matter.
@@ -18,7 +18,7 @@ priority: 0
 licenseRequired: False
 productClasses: 
 ; Change this to something more sensible.
-setupScript: buildbot-batch.ins
+setupScript: buildbot-startup.ins
 ; These are rarely used.
 uninstallScript:
 updateScript: 
@@ -28,5 +28,11 @@ onceScript:
 [ProductDependency]
 action: setup
 requiredProduct: toolsrepo
+requiredStatus: installed
+requirementType: before
+
+[ProductDependency]
+action: setup
+requiredProduct: mozillabuild
 requiredStatus: installed
 requirementType: before
