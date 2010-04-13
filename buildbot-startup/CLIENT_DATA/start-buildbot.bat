@@ -6,9 +6,12 @@ SET MOZILLABUILDDRIVE=%~d0%
 SET MOZILLABUILDPATH=%~p0%
 SET MOZILLABUILD=%MOZILLABUILDDRIVE%%MOZILLABUILDPATH%
 
+set log="c:\tmp\buildbot-startup.log"
+
 echo "Mozilla tools directory: %MOZILLABUILD%"
 
 REM Get MSVC paths
+echo "%date% %time% - About to call guess-msvc.bat" >> %log%
 call "%MOZILLABUILD%\guess-msvc.bat"
 
 REM Use the "new" moztools-static
@@ -19,24 +22,28 @@ SET PATH=%PATH%;%MOZ_TOOLS%\bin
 
 if "%VC8DIR%"=="" (
     if "%VC8EXPRESSDIR%"=="" (
+        echo "%date% %time% - MSVC++8 not found" >> %log%
         ECHO "Microsoft Visual C++ version 8 was not found. Exiting."
         pause
         EXIT /B 1
     )
 
     if "%SDKDIR%"=="" (
+        echo "%date% %time% - SDK not found" >> %log%
         ECHO "Microsoft Platform SDK was not found. Exiting."
         pause
         EXIT /B 1
     )
 
     rem Prepend MSVC paths
+    echo "%date% %time% - About to call vcvars32.bat" >> %log%
     call "%VC8EXPRESSDIR%\Bin\vcvars32.bat"
 
     SET USESDK=1
     rem Don't set SDK paths in this block, because blocks are early-evaluated.
 ) else (
     rem Prepend MSVC paths
+    echo "%date% %time% - Calling vcvars32.bat in VC8DIR" >> %log%
     call "%VC8DIR%\Bin\vcvars32.bat"
 
     rem If the SDK is Win2k3SP2 or higher, we want to use it
@@ -55,4 +62,6 @@ if "%USESDK%"=="1" (
 )
 
 cd "%USERPROFILE%"
+echo "%date% %time% - About to run start-buildbot.sh" >> %log%
 start /min "MSYS Shell - MSVC8 Environment" "%MOZILLABUILD%\msys\bin\rxvt" -backspacekey  -sl 2500 -fg %FGCOLOR% -bg %BGCOLOR% -sr -tn msys -geometry 80x25 -e /bin/bash --login /d/mozilla-build/start-buildbot.sh
+echo "%date% %time% - start-buildbot.sh finished" >> %log%
