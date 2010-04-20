@@ -62,6 +62,10 @@ if "%USESDK%"=="1" (
 )
 
 cd "%USERPROFILE%"
+:start
 echo "%date% %time% - About to run start-buildbot.sh" >> %log%
-start /min "MSYS Shell - MSVC8 Environment" "%MOZILLABUILD%\msys\bin\rxvt" -backspacekey  -sl 2500 -fg %FGCOLOR% -bg %BGCOLOR% -sr -tn msys -geometry 80x25 -e /bin/bash --login /d/mozilla-build/start-buildbot.sh
+"%MOZILLABUILD%\msys\bin\bash" --login -c /d/mozilla-build/start-buildbot.sh
 echo "%date% %time% - start-buildbot.sh finished" >> %log%
+"%MOZILLABUILD%\msys\bin\sleep" 30
+echo "%date% %time% - restarting start-buildbot.sh" >> %log%
+goto start
