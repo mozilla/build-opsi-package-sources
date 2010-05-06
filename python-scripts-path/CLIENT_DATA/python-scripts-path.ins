@@ -1,0 +1,14 @@
+[Initial]
+Message=Add Python\Scripts to PATH
+StayOnTop=false
+
+[Aktionen]
+; Have to read PATH from env on Win2K, see wInst Manual for details
+DefVar $Path$
+set $Path$ = EnvVar ("Path")
+Registry_add_python_scripts_path
+
+[Registry_add_python_scripts_path]
+openkey [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\control\Session Manager\Environment]
+set "Path"="$Path$"
+supp "Path"; "d:\mozilla-build\python25\scripts"
