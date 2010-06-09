@@ -13,6 +13,7 @@ Set $InstallDir$ = $InstallPrefix$+"\\lib\\site-packages\\buildbot"
 Set $ScriptDir$ = $InstallPrefix$+"\\scripts"
 
 DosInAnIcon_delete_buildbot
+DosInAnIcon_install_simplejson
 DosInAnIcon_install_buildbot
 
 if not(FileExists($InstallDir$))
@@ -22,6 +23,9 @@ endif
 
 [DosInAnIcon_delete_buildbot]
 rmdir /s /q $InstallDir$
+
+[DosInAnIcon_install_simplejson]
+$InstallPrefix$\Scripts\easy_install %SCRIPTPATH%\simplejson-2.1.1-py2.5-win32.egg
 
 [DosInAnIcon_install_buildbot]
 rmdir /s /q buildbot
