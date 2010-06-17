@@ -5,24 +5,28 @@ StayOnTop=false
 [Aktionen]
 DefVar $BuildbotRepo$
 DefVar $InstallPrefix$
-DefVar $InstallDir$
+DefVar $DeleteGlob$
 DefVar $ScriptDir$
+DefVar $ReturnCode$
 Set $BuildbotRepo$ = "http://hg.mozilla.org/build/buildbot"
 Set $InstallPrefix$ = "d:\\mozilla-build\\python25"
-Set $InstallDir$ = $InstallPrefix$+"\\lib\\site-packages\\buildbot"
+Set $DeleteGlob$ = "/d/mozilla-build/python25/lib/site-packages/buildbot*"
 Set $ScriptDir$ = $InstallPrefix$+"\\scripts"
 
 DosInAnIcon_delete_buildbot
 DosInAnIcon_install_simplejson
 DosInAnIcon_install_buildbot
+WinBatch_check_buildbot
 
-if not(FileExists($InstallDir$))
-    logError "Fatal: After Installation "+$InstallDir$+" not found"
+Set $ReturnCode$ = GetLastExitCode
+
+if not( $ReturnCode$ INT= "0" )
+    logError "Fatal: After Installation buildbot couldn't be run: "+$ReturnCode$
     isFatalError
 endif
 
 [DosInAnIcon_delete_buildbot]
-rmdir /s /q $InstallDir$
+D:\mozilla-build\msys\bin\rm -rf $DeleteGlob$
 
 [DosInAnIcon_install_simplejson]
 $InstallPrefix$\Scripts\easy_install %SCRIPTPATH%\simplejson-2.1.1-py2.5-win32.egg
@@ -31,8 +35,9 @@ $InstallPrefix$\Scripts\easy_install %SCRIPTPATH%\simplejson-2.1.1-py2.5-win32.e
 rmdir /s /q buildbot
 hg clone $BuildbotRepo$ buildbot
 cd buildbot
-; We use --old-and-unmanageable because it gives us a non-changing
-; directory name
-python setup.py install --old-and-unmanageable --prefix=$InstallPrefix$
+python setup.py install --prefix=$InstallPrefix$
 ; Need to make sure we get the non-easy_install script
 copy /Y bin/buildbot $ScriptDir$
+
+[WinBatch_check_buildbot]
+$InstallPrefix$\Scripts\buildbot --version
