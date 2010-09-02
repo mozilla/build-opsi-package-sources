@@ -1,0 +1,10 @@
+[Initial]
+Message=Uninstalling YASM
+StayOnTop=false
+
+[Aktionen]
+Files_yasm
+
+[Files_yasm]
+copy %SCRIPTPATH%\original\profile-extrapaths.sh D:\mozilla-build\msys\etc\profile.d\
+delete -s D:\mozilla-build\yasm
