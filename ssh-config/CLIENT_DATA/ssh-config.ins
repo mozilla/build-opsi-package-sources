@@ -1,0 +1,14 @@
+[Initial]
+Message=SSH Configuration
+StayOnTop=false
+
+[Aktionen]
+DefVar $HOME$
+DefVar $SSH_DIR$
+Set $HOME$ = "C:\\documents and settings\\cltbld"
+Set $SSH_DIR$ = $HOME$ + "\\.ssh"
+DosInAnIcon_copy_files
+
+[DosInAnIcon_copy_files]
+copy /Y %SCRIPTPATH%\config "$SSH_DIR$"
+copy /Y %SCRIPTPATH%\known_hosts "$SSH_DIR$"
