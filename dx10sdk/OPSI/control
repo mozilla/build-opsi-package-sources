@@ -1,0 +1,26 @@
+[Package]
+version: 1
+depends:
+incremental: False
+
+[Product]
+type: localboot
+; id is a very short name for the package.
+id: dx10sdk
+; name is a longer, more descript name.
+name: DirectX Software Development Kit (February 2010)
+description: DirectX Software Development Kit contains the DirectX Runtime and all DirectX software required to create DirectX compliant applications.
+advice: 
+; You should put the version number of the application here.
+; If this package isn't for installing an application it doesn't really matter.
+version: 9.28.1886
+priority: 0
+licenseRequired: False
+productClasses: 
+; Change this to something more sensible.
+setupScript: dx10sdk.ins
+; These are rarely used.
+uninstallScript: dx10sdk.unins
+updateScript: 
+alwaysScript: 
+onceScript: 

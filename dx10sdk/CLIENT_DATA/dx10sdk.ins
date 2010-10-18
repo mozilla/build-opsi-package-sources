@@ -1,0 +1,33 @@
+[Initial]
+Message=DirectX Software Development Kit 10 Install...
+StayOnTop=false
+
+[Aktionen]
+DefVar $InstallDir$
+DefVar $SevenZip$
+Set $InstallDir$ = "d:\sdks\dx10"
+Set $SevenZip$ = "d:\mozilla-build\7zip\7z.exe"
+ 
+DosInAnIcon_install_dxsdk
+Registry_install_dxsdk
+
+[DosInAnIcon_install_dxsdk]
+"$SevenZip$" x %SCRIPTPATH%\DXSDK_Feb10.exe -aoa -o"$InstallDir$" DXSDK\Lib DXSDK\Include DXSDK\Redist
+move "$InstallDir$\DXSDK\Lib" "$InstallDir$"
+move "$InstallDir$\DXSDK\Include" "$InstallDir$"
+move "$InstallDir$\DXSDK\Redist" "$InstallDir$"
+rmdir /s /q "$InstallDir$\DXSDK"
+
+
+[Registry_install_dxsdk]
+openkey [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\DirectX]
+set "InstallMDX" = REG_DWORD:00000001
+set "SDKVersion" = "9.28.1886.0"
+
+openkey [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\DirectX\Microsoft DirectX SDK (February 2010)]
+set "ProductName" = "Microsoft DirectX SDK (February 2010)"
+set "InstalledVersion" = "9,28,1886,0"
+set "InstallPath" = "$InstallDir$"
+set "InstallType" = "DXSDK"
+set "LastInstallDate" = REG_BINARY:f0,ba,e8,2f,b4,6a,cb,01
+set "InstalledFeatures"= REG_DWORD:00000060
