@@ -1,0 +1,19 @@
+[Initial]
+Message=sshd Install
+StayOnTop=false
+
+[Aktionen]
+; Do stuff here
+ WinBatch_install_KpyM
+ Registry_Open_Port
+ Files_copy_registration_key
+
+[WinBatch_install_KpyM]
+"%ProgramFilesDir%\AutoIt3\AutoIt3.exe" %SCRIPTPATH%\kpyM.au3 %SCRIPTPATH%\kts118.exe
+
+[Registry_Open_Port]
+openkey [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\StandardProfile\GloballyOpenPorts\List]
+Set "22:TCP" = "22:TCP:*:Enabled:ssh"
+
+[Files_copy_registration_key]
+copy "%SCRIPTPATH%\kts.ini" "%ProgramFilesDir%\KTS\"

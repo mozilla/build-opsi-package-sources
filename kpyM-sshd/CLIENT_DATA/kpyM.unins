@@ -1,0 +1,19 @@
+[Initial]
+Message=sshd Install
+StayOnTop=false
+
+[Aktionen]
+; Do stuff here
+ WinBatch_uninstall_KpyM
+ Files_cleanup
+ Registry_close_port
+
+[WinBatch_uninstall_KpyM]
+"%ProgramFilesDir%\AutoIt3\AutoIt3.exe" "%SCRIPTPATH%\kpyM_unins.au3" "%ProgramFilesDir%\KTS\unins000.exe"
+
+[Files_cleanup]
+Delete -s "%ProgramFilesDir%\KTS\"
+
+[Registry_close_port]
+openkey [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\StandardProfile\GloballyOpenPorts\List]
+DeleteVar "22:TCP"
