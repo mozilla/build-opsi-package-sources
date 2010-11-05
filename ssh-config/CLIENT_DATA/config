@@ -3,4 +3,6 @@ IdentityFile "/c/Documents and Settings/cltbld/.ssh/id_dsa"
 Host hgpvt.mozilla.org
 IdentityFile "/c/Documents and Settings/cltbld/.ssh/ffxbld_dsa"
 User ffxbld
-
+Host dm-pvtbuild01.mozilla.org
+IdentityFile "/c/Documents and Settings/cltbld/.ssh/ffxbld_dsa"
+User ffxbld
