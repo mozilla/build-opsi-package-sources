@@ -61,6 +61,14 @@ if "%USESDK%"=="1" (
     set INCLUDE=%SDKDIR%\include;%SDKDIR%\include\atl;%INCLUDE%
 )
 
+rem Set up Direct X 10 environment
+set INCLUDE=%INCLUDE%;d:\sdks\dx10\include
+if "%WIN64%" == "1" (
+  set LIB=%LIB%;d:\sdks\dx10\lib\x64
+) else (
+  set LIB=%LIB%;d:\sdks\dx10\lib\x86
+)
+
 cd "%USERPROFILE%"
 :start
 echo "%date% %time% - About to run start-buildbot.sh" >> %log%
