@@ -1,1 +1,3 @@
 passwordupdate.ins lives in the mofo opsi-binaries repository because it contains plaintext versions of our passwords. Do NOT move it to this repository.
+
+See https://intranet.mozilla.org/RelEngWiki/index.php/Repositories/CVS/mofo
