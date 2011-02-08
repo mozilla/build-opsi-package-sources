@@ -1,0 +1,31 @@
+[Initial]
+Message=Mercurial Installation
+StayOnTop=false
+
+[Aktionen]
+DefVar $InstallPrefix$
+DefVar $OldInstallPrefix$
+Set $InstallPrefix$ = "d:\\mozilla-build\\hg"
+Set $OldInstallPrefix$ = "d:\\mercurial"
+
+if FileExists("D:\mozilla-build\hg\unins000.exe")
+    Winbatch_uninstall_mb_mercurial
+endif
+
+if FileExists("D:\mercurial\unins000.exe")
+    Winbatch_uninstall_old_mercurial
+endif
+
+Winbatch_install_mercurial
+
+[Winbatch_uninstall_mb_mercurial]
+; Uninstall old versions
+$InstallPrefix$\unins000.exe /silent
+
+[Winbatch_uninstall_old_mercurial]
+; This is from before hg was bundled with Mozilla-Build
+$OldInstallPrefix$\unins000.exe /silent
+
+[Winbatch_install_mercurial]
+; To uninstall this version, "msiexec.exe /x{CA7BFE48-3444-4572-A32E-1B89F1EE6D88} /passive"
+msiexec /i %SCRIPTPATH%\mercurial-1.7.5-x86.msi /passive /log hg_install.log INSTALLDIR=$InstallPrefix$

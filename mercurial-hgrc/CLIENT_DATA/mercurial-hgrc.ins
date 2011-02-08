@@ -1,0 +1,12 @@
+[Initial]
+Message=Mercurial hgrc Installation
+StayOnTop=false
+
+[Aktionen]
+DefVar $HomeDir$
+Set $HomeDir$ = "C:\\Documents and Settings\\cltbld"
+
+DosInAnIcon_install_hgrc
+
+[DosInAnIcon_install_hgrc]
+copy /Y %SCRIPTPATH%\hgrc "$HomeDir$\\.hgrc"
