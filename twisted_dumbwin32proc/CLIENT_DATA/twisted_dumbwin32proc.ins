@@ -1,0 +1,13 @@
+[Initial]
+Message=Installing Twisted patch 
+StayOnTop=false
+
+[Aktionen]
+DefVar $TwistedDir$
+Set $TwistedDir$ = "C:\\mozilla-build\\python25\\Lib\\site-packages\\twisted\\internet"
+DosInAnIcon_dumbwin32proc
+
+[DosInAnIcon_dumbwin32proc]
+del /q /f "$TwistedDir$\\_dumbwin32proc.pyc"
+move /Y "$TwistedDir$\\_dumbwin32proc.py" "$TwistedDir$\\_dumbwin32proc.py.bak"
+copy /Y "%SCRIPTPATH%\\_dumbwin32proc.py" "$TwistedDir$\\_dumbwin32proc.py"
