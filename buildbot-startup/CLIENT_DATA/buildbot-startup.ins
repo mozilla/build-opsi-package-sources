@@ -3,10 +3,16 @@ Message=Deploying Buildbot Startup Files
 StayOnTop=false
 
 [Aktionen]
+DefVar $RunslaveRevision$
+Set $RunslaveRevision$ = "tip"
 Files_install_startup_files
+DosInAnIcon_install_runslave_py
 
 [Files_install_startup_files]
 copy %SCRIPTPATH%\buildbot.bat "c:\documents and settings\cltbld\start menu\programs\startup"
 copy %SCRIPTPATH%\start-buildbot.bat "d:\mozilla-build"
 copy %SCRIPTPATH%\guess-msvc.bat "d:\mozilla-build"
-copy %SCRIPTPATH%\start-buildbot.sh "d:\mozilla-build"
+
+[DosInAnIcon_install_runslave_py]
+D:\mozilla-build\wget\wget.exe -O c:\runslave.py http://hg.mozilla.org/build/puppet-manifests/raw-file/$RunslaveRevision$/modules/buildslave/files/runslave.py
+del d:\mozilla-build\start-buildbot.sh

@@ -9,11 +9,11 @@ type: localboot
 id: buildbot-startup
 ; name is a longer, more descript name.
 name: Buildbot Startup Files
-description: This package deploys the files involved in starting the Buildbot process on boot
+description: This package deploys the files involved in starting the Buildbot process on boot, only on w32 builders
 advice: 
 ; You should put the version number of the application here.
 ; If this package isn't for installing an application it doesn't really matter.
-version: 1.1
+version: 2.0
 priority: 0
 licenseRequired: False
 productClasses: 

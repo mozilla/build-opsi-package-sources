@@ -71,9 +71,6 @@ if "%WIN64%" == "1" (
 
 cd "%USERPROFILE%"
 :start
-echo "%date% %time% - About to run start-buildbot.sh" >> %log%
-"%MOZILLABUILD%\msys\bin\bash" --login -c /d/mozilla-build/start-buildbot.sh
-echo "%date% %time% - start-buildbot.sh finished" >> %log%
-"%MOZILLABUILD%\msys\bin\sleep" 30
-echo "%date% %time% - restarting start-buildbot.sh" >> %log%
-goto start
+echo "%date% %time% - About to run runslave.py"
+"%MOZILLABUILD%\python25\python" c:\runslave.py
+echo "%date% %time% - runslave.py finished"
