@@ -17,4 +17,4 @@ openkey [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\DirectX]
 DeleteVar "InstallMDX"
 DeleteVar "SDKVersion"
 
-deletekey [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\DirectX\Microsoft DirectX SDK (February 2010)]
+deletekey [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\DirectX\Microsoft DirectX SDK (June 2010)]
