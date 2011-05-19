@@ -13,7 +13,7 @@ description: This package deploys the files involved in starting the Buildbot pr
 advice: 
 ; You should put the version number of the application here.
 ; If this package isn't for installing an application it doesn't really matter.
-version: 2.1
+version: 2.2
 priority: 0
 licenseRequired: False
 productClasses: 
