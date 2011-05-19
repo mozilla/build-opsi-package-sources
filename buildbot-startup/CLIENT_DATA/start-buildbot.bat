@@ -71,6 +71,12 @@ if "%WIN64%" == "1" (
 
 cd "%USERPROFILE%"
 :start
+
 echo "%date% %time% - About to run runslave.py"
-"%MOZILLABUILD%\python25\python" c:\runslave.py
+
+REM running this via 'bash' is critical - bash adds a bunch of items to PATH
+REM which the build steps expect to find.
+
+"%MOZILLABUILD%\msys\bin\bash" --login -c "python /c/runslave.py"
+
 echo "%date% %time% - runslave.py finished"
