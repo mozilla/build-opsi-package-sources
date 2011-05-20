@@ -12,6 +12,7 @@ DosInAnIcon_install_dxsdk
 Registry_install_dxsdk
 
 [DosInAnIcon_install_dxsdk]
+rmdir /s /q "$InstallDir$"
 "$SevenZip$" x %SCRIPTPATH%\DXSDK_Jun10.exe -aoa -o"$InstallDir$" DXSDK\Lib DXSDK\Include DXSDK\Redist
 move "$InstallDir$\DXSDK\Lib" "$InstallDir$"
 move "$InstallDir$\DXSDK\Include" "$InstallDir$"
