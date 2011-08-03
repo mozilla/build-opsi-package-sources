@@ -1,0 +1,26 @@
+[Package]
+version: 1
+depends:
+incremental: False
+
+[Product]
+type: localboot
+; id is a very short name for the package.
+id: winxp-graphic-driver 
+; name is a longer, more descript name.
+name: Windows XP Graphic Driver Update 
+description: It updates the GeForce 9400 graphics driver of the r3 XP machines 
+advice: 
+; You should put the version number of the application here.
+; If this package isn't for installing an application it doesn't really matter.
+version: 260.99
+priority: 0
+licenseRequired: False
+productClasses: 
+; Change this to something more sensible.
+setupScript: winxp-graphic-driver.ins
+; These are rarely used.
+uninstallScript: 
+updateScript: 
+alwaysScript: 
+onceScript: 

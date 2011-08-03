@@ -1,0 +1,34 @@
+[Initial]
+Message=Windows XP GeForce 9400 graphic driver installation
+StayOnTop=false
+
+[Aktionen]
+DefVar $SevenZip$
+DefVar $SetupExe$
+
+Set $SevenZip$ = "C:\mozilla-build\7zip\7z.exe"
+Set $SetupExe$ = "C:\NVIDIA\DisplayDriver\260.99\WinXP\English\setup.exe"
+
+if not(FileExists($SevenZip$))
+    logError "Fatal: We can't find the 7z.exe file"
+    isFatalError
+endif
+
+DosInAnIcon_unzip_driver
+
+if not(FileExists($SetupExe$))
+    logError "Fatal: We can't find the setup.exe file" 
+    isFatalError
+endif
+
+DosInAnIcon_run_setup
+
+ExitWindows /Reboot
+
+[DosInAnIcon_unzip_driver]
+; Cleanup previous unpack attempt first
+rmdir /q /s C:\NVIDIA
+$SevenZip$ -y -o"C:\" x %SCRIPTPATH%\winxp-260.99-whql-driver.zip
+
+[DosInAnIcon_run_setup]
+$SetupExe$ /s /k /noeula
