@@ -1,0 +1,12 @@
+[Initial]
+Message=SSL for Python 2.5
+StayOnTop=false
+
+[Aktionen]
+DefVar $SITE_PACKAGES$
+Set $SITE_PACKAGES$ = "d:\mozilla-build\python25\lib\site-packages"
+Files_copy_files
+
+[Files_copy_files]
+copy -s %SCRIPTPATH%\ssl\*.* $SITE_PACKAGES$\ssl
+copy %SCRIPTPATH%\ssl-1.15-py2.5.egg-info $SITE_PACKAGES$\
