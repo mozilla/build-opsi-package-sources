@@ -1,0 +1,26 @@
+[Package]
+version: 1
+depends:
+incremental: False
+
+[Product]
+type: localboot
+; id is a very short name for the package.
+id: vc2010_debugcrt_x86
+; name is a longer, more descript name.
+name: Microsoft Visual C++ 2010 Debug CRT for x86
+description: The Microsoft Visual C++ 2010 Debug CRT for x86 allows running debug applications developed Visual C++ on a computer that does not have Visual C++ 2010 installed.
+advice: 
+; You should put the version number of the application here.
+; If this package isn't for installing an application it doesn't really matter.
+version: 1.0
+priority: 0
+licenseRequired: False
+productClasses: 
+; Change this to something more sensible.
+setupScript: vc2010_debugcrt_x86.ins
+; These are rarely used.
+uninstallScript: 
+updateScript: 
+alwaysScript: 
+onceScript: 
