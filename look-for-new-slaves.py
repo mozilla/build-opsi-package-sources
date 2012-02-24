@@ -27,6 +27,9 @@ OWNER=getpwnam("opsiconfd")[2] # The UID of opsiconfd
 GROUP=getgrnam("pcpatch")[2] # The GID of pcpatch
 MODE=0664
 
+# os.SEEK_END added in python 2.5
+SEEK_END=2
+
 BUILD_HOST, BUILD_IX_HOST, TALOS_XP_HOST, TALOS_WIN7_HOST, UNKNOWN_HOST = range(5)
 
 class MissingTemplateError(Exception):
@@ -86,7 +89,7 @@ def add_to_pckeys(host, hash, pckeys):
     pckeys_file = None
     try:
         pckeys_file = open(pckeys, "a")
-        pckeys_file.seek(0, os.SEEK_END)
+        pckeys_file.seek(0, SEEK_END)
         pckeys_file.write("%s\n" % line)
     except IOError, e:
         pckeys_file.close()
