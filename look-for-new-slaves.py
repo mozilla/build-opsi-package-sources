@@ -4,7 +4,6 @@ from grp import getgrnam
 from md5 import md5
 import os
 from os import path
-import posixfile
 from pwd import getpwnam
 import shutil
 import socket
@@ -87,7 +86,7 @@ def add_to_pckeys(host, hash, pckeys):
     pckeys_file = None
     try:
         pckeys_file = open(pckeys, "a")
-        pckeys_file.seek(0, posixfile.SEEK_END)
+        pckeys_file.seek(0, os.SEEK_END)
         pckeys_file.write("%s\n" % line)
     except IOError, e:
         pckeys_file.close()
