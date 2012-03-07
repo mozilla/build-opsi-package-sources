@@ -1,0 +1,26 @@
+[Package]
+version: 1
+depends:
+incremental: False
+
+[Product]
+type: localboot
+; id is a very short name for the package.
+id: python-simplejson
+; name is a longer, more descript name.
+name: Simple JSON for Python 2.5
+description: Simple JSON for Python 2.5
+advice: 
+; You should put the version number of the application here.
+; If this package isn't for installing an application it doesn't really matter.
+version: 1
+priority: 0
+licenseRequired: False
+productClasses: 
+; Change this to something more sensible.
+setupScript: json.ins
+; These are rarely used.
+uninstallScript: 
+updateScript: 
+alwaysScript: 
+onceScript: 
