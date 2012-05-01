@@ -1,0 +1,16 @@
+[Initial]
+Message=Installing Python 2.7
+StayOnTop=false
+
+[Aktionen]
+DefVar $MOZILLABUILDDIR$
+Set $MOZILLABUILDDIR$ = "d:\mozilla-build"
+
+if FileExists("c:\mozilla-build\")
+    Set $MOZILLABUILDDIR$ = "c:\mozilla-build"
+endif
+
+Winbatch_install_python
+
+[Winbatch_install_python]
+msiexec /i %SCRIPTPATH%\python-2.7.3.msi /quiet /norestart  /log c:\tmp\python27_install.log TARGETDIR=$MOZILLABUILDDIR$\python27 ALLUSERS=1

@@ -1,0 +1,9 @@
+[Initial]
+Message=Uninstalling Python 2.7
+StayOnTop=false
+
+[Aktionen]
+Winbatch_uninstall_python
+
+[Winbatch_uninstall_python]
+msiexec /x %SCRIPTPATH%\python-2.7.3.msi /quiet /norestart  /log c:\tmp\python27_uninstall.log
