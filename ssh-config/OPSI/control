@@ -13,7 +13,7 @@ description: SSH Configuration
 advice: 
 ; You should put the version number of the application here.
 ; If this package isn't for installing an application it doesn't really matter.
-version: 1.3
+version: 1.4
 priority: 0
 licenseRequired: False
 productClasses: 
