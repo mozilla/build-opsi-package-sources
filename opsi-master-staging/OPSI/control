@@ -1,0 +1,26 @@
+[Package]
+version: 1
+depends:
+incremental: False
+
+[Product]
+type: localboot
+; id is a very short name for the package.
+id: opsi-master-staging
+; name is a longer, more descript name.
+name: OPSI Master Staging Product
+description: Switch to Staging Master Product
+advice: 
+; You should put the version number of the application here.
+; If this package isn't for installing an application it doesn't really matter.
+version: 1
+priority: 0
+licenseRequired: False
+productClasses: 
+; Change this to something more sensible.
+setupScript: opsi-master-staging.ins
+; These are rarely used.
+uninstallScript: 
+updateScript: 
+alwaysScript: 
+onceScript: 
