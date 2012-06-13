@@ -1,5 +1,5 @@
 [Package]
-version: 2
+version: 1
 depends:
 incremental: False
 
@@ -13,7 +13,7 @@ description: Password Updater
 advice: 
 ; You should put the version number of the application here.
 ; If this package isn't for installing an application it doesn't really matter.
-version: 2.0
+version: 3.0
 priority: 0
 licenseRequired: False
 productClasses: 
