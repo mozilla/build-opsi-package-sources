@@ -5,8 +5,12 @@ StayOnTop=false
 [Aktionen]
 DefVar $TwistedDir$
 Set $TwistedDir$ = "C:\\mozilla-build\\python25\\Lib\\site-packages\\twisted\\internet"
+DefVar $BuildbotveDir$
+Set $BuildbotveDir$ = "C:\\mozilla-build\\buildbotve\\python25\\Lib\\site-packages\\twisted\\internet"
 DosInAnIcon_dumbwin32proc
 
 [DosInAnIcon_dumbwin32proc]
 del /q /f "$TwistedDir$\\_dumbwin32proc.pyc"
 move /Y "$TwistedDir$\\_dumbwin32proc.py.bak" "$TwistedDir$\\_dumbwin32proc.py"
+del /q /f "$BuildbotveDir$\\_dumbwin32proc.pyc"
+move /Y "$BuildbotveDir$\\_dumbwin32proc.py.bak" "$BuildbotveDir$\\_dumbwin32proc.py"
