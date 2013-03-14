@@ -6,7 +6,7 @@ StayOnTop=false
 DefVar $TwistedDir$
 Set $TwistedDir$ = "C:\\mozilla-build\\python25\\Lib\\site-packages\\twisted\\internet"
 DefVar $BuildbotveDir$
-Set $BuildbotveDir$ = "C:\\mozilla-build\\buildbotve\\python25\\Lib\\site-packages\\twisted\\internet"
+Set $BuildbotveDir$ = "C:\\mozilla-build\\buildbotve\\Lib\\site-packages\\twisted\\internet"
 DosInAnIcon_dumbwin32proc
 
 [DosInAnIcon_dumbwin32proc]
