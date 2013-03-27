@@ -238,8 +238,7 @@ class Process(_pollingfile._PollingTimer, BaseProcess):
         if self.pid is None:
             raise error.ProcessExitedAlready()
         if signalID in ("INT", "TERM", "KILL"):
-            debug('killing process %s' % self.pid)
-            os.popen('taskkill /T /F /PID %s' % self.pid)
+            win32process.TerminateProcess(self.hProcess, 1)
 
     def _getReason(self, status):
         if status == 0:

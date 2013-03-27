@@ -11,8 +11,6 @@ DosInAnIcon_dumbwin32proc
 
 [DosInAnIcon_dumbwin32proc]
 del /q /f "$TwistedDir$\\_dumbwin32proc.pyc"
-move /Y "$TwistedDir$\\_dumbwin32proc.py" "$TwistedDir$\\_dumbwin32proc.py.bak"
 copy /Y "%SCRIPTPATH%\\_dumbwin32proc.py" "$TwistedDir$\\_dumbwin32proc.py"
 del /q /f "$BuildbotveDir$\\_dumbwin32proc.pyc"
-move /Y "$BuildbotveDir$\\_dumbwin32proc.py" "$BuildbotveDir$\\_dumbwin32proc.py.bak"
 copy /Y "%SCRIPTPATH%\\_dumbwin32proc.py" "$BuildbotveDir$\\_dumbwin32proc.py"
