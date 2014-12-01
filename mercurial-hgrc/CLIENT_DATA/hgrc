@@ -1,6 +1,0 @@
-[win32text]
-warn = False
-
-[extensions]
-share =
-purge =

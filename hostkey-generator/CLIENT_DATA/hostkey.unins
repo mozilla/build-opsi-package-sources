@@ -1,9 +1,0 @@
-[Initial]
-Message=Uninstall OPSI Hostkey Generator
-StayOnTop=false
-
-[Aktionen]
-DosInAnIcon_delete_hostkey_task
-
-[DosInAnIcon_delete_hostkey_task]
-schtasks /delete /tn opsikey /f

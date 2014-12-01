@@ -1,9 +1,0 @@
-[Initial]
-Message=Installing Microsoft Visual C++ 2005 SP1 Redistributable Package (x86) ...
-StayOnTop=false
-
-[Aktionen]
-Winbatch_install_vc2005sp1_redist
-
-[Winbatch_install_vc2005sp1_redist]
-msiexec /i %SCRIPTPATH%\vcredist.msi /qn /l*v "c:\tmp\vcredist_x86.log"
