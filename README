@@ -1,5 +1,1 @@
-This repository contains source directories that OPSI packages may be generated out of. Each directory should contain CLIENT_DATA/, OPSI/ directories, and optionally, SERVER_DATA/.
-
-When creating a new product you should make a copy of the newproduct-template directory, and edit those files appropriately.
-
-New packages REQUIRE review before being checked in.
+This Repository is Obsolete, in favor of alternate solutions for windows. See Content at https://wiki.mozilla.org/ReleaseEngineering and find us in IRC for more
